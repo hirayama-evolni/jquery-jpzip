@@ -11,6 +11,10 @@
         return obj === Object(obj);
     };
 
+    var isFunction = function(obj) {
+        return typeof obj == 'function';
+    };
+
     var prefs = [
         null, '北海道', '青森県', '岩手県', '宮城県',
         '秋田県', '山形県', '福島県', '茨城県', '栃木県',
@@ -42,7 +46,7 @@
 
             var error = function(msg, call){
                 call = !!call;
-                
+
                 if(console){
                     console.error(msg);
                 }
@@ -66,6 +70,11 @@
                 if(!arg2 || !isString(arg2)){
                     // arg2 must be there and be string.
                     error("Second argument must be spefified and be string.");
+                    return;
+                }
+                if(arg3 && !isFunction(arg3)){
+                    // arg3 must be a function.
+                    error("Third argument must be a function.");
                     return;
                 }
                 $.extend(opts, {zip1: arg1, zip2: arg2, callback: arg3});
