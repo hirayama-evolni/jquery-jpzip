@@ -1,6 +1,6 @@
 /* jshint eqnull: true */
 
-(function($){
+(function($, root){
     'use strict';
 
     var isString = function(obj){
@@ -41,6 +41,7 @@
                 type: "google", // or "ajaxzip3"
                 zip1: null,
                 zip2: null,
+                divide: false,
                 callback: null
             };
 
@@ -85,11 +86,11 @@
             }
 
             /* argument format check */
-            if(!opts.zip1 || !opts.zip1.match(/^\d{3}$/)){
+            if(!opts.zip1 || opts.zip1.match(/^\d{3}$/) == -1){
                 error("Zip1 must be three digits.");
                 return;
             }
-            if(!opts.zip1 || !opts.zip2.match(/^\d{4}$/)){
+            if(!opts.zip1 || opts.zip2.search(/^\d{4}$/) == -1){
                 error("Zip2 must be four digits.");
                 return;
             }
@@ -110,9 +111,10 @@
                         var result = data[0][1][0];
                         // is it valid?
                         var flag = false;
+                        var match;
                         for(var i=0; i<prefs.length; i++){
                             if(!prefs[i]) continue;
-                            if(result.match(new RegExp('^'+prefs[i]))){
+                            if(match = result.match(new RegExp('^('+prefs[i]+')(.*)$'))){
                                 flag = true;
                                 break;
                             }
@@ -122,7 +124,11 @@
                             error("Fail: the result is \""+result+"\"", true);
                         } else {
                             if(opts.callback){
-                                opts.callback(result);
+                                if(opts.divide){
+                                    opts.callback.call(root, match[1], match[2]);
+                                } else {
+                                    opts.callback.call(root, match[0]);
+                                }
                             }
                         }
                     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -146,7 +152,11 @@
                         } else {
                             var p = prefs[ary[0]];
                             if(opts.callback){
-                                opts.callback(p+ary[1]+ary[2]);
+                                if(opts.divide){
+                                    opts.callback.call(root, p, ary[1]+ary[2]);
+                                } else {
+                                    opts.callback.call(root, p+ary[1]+ary[2]);
+                                }
                             }
                         }
                     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -158,4 +168,4 @@
             funcs[opts.type]();
         }
     });
-})(jQuery);
+})(jQuery, this);

@@ -44,7 +44,10 @@ $.jpzip(opts);
   後者は[ajaxzip3](https://code.google.com/p/ajaxzip3/)のデータを使って検索します。
   - zip1 … 郵便番号の前３桁
   - zip2 … 郵便番号の後４桁
-  - callback … 取得が終わった際に呼ばれるコールバック。`function(result)`
+  - divide … `true`なら都道府県名とそれ以降に分けてコールバックに渡す。
+    デフォルトは`false`。
+  - callback … 取得が終わった際に呼ばれるコールバック。
+    `function(result[, result2])`
 
 ## その他
 
