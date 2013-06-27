@@ -52,7 +52,7 @@
                     console.error(msg);
                 }
                 if(call && opts.callback){
-                    opts.callback("");
+                    opts.callback("", "");
                 }
             };
 
