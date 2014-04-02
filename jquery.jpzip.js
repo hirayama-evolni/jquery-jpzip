@@ -98,7 +98,7 @@
             var funcs = {
                 google: function(){
                     var url =
-                        "http://www.google.com/transliterate?langpair=ja-Hira|ja&text="+
+                        "//www.google.com/transliterate?langpair=ja-Hira|ja&text="+
                         opts.zip1+"-"+opts.zip2;
 
                     $.ajax({
@@ -138,7 +138,7 @@
 
                 ajaxzip3 : function(){
                     var url =
-                        "http://ajaxzip3.googlecode.com/svn/trunk/ajaxzip3/zipdata/zip-"+opts.zip1+".js";
+                        "//ajaxzip3.googlecode.com/svn/trunk/ajaxzip3/zipdata/zip-"+opts.zip1+".js";
 
                     $.ajax({
                         url: url,
